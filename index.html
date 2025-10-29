@@ -48,7 +48,6 @@
         }
 
         /* 스크롤바 커스터마이징 (옵션) */
-        /* 이 코드를 추가하여 부드러운 스크롤바 모양을 만듭니다. */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -123,7 +122,7 @@
                 <div class="bg-white p-8 sm:p-12 rounded-2xl shadow-xl border-4 border-amber-300 text-left space-y-4">
                     <p class="text-lg">✅ <strong class="text-amber-600">이름:</strong> [종채영] (명신여고 1학년)</p>
                     <p class="text-lg">✅ <strong class="text-amber-600">취미:</strong> 코딩 (HTML, CSS, JavaScript, Python 등)</p>
-                    <p class="text-lg">✅ <strong class="text-amber-600">관심 분야:</strong> AI 챗봇, 사용자 경험 개선 앱, 웹 개발 🤖</p>
+                    <p class="text-lg">✅ <strong class="text-amber-600">관심 분야:</b> AI 챗봇, 사용자 경험 개선 앱, 웹 개발 🤖</p>
                     <p class="text-lg">✅ <strong class="text-amber-600">한 마디:</strong> 상상을 코드로 바꾸는 과정이 가장 짜릿해요! 제 포트폴리오를 방문해 주셔서 감사합니다. 같이 성장할 분들 환영해요! 🌱</p>
                 </div>
             </div>
@@ -162,6 +161,19 @@
                         <span class="inline-block bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full">HTML / CSS / Firebase</span>
                         <button class="details-btn mt-4 bg-amber-300 text-amber-900 font-semibold py-2 px-4 rounded-xl hover:bg-amber-400 transition duration-300">자세히 보기 🔎</button>
                     </div>
+
+                    <!-- 프로젝트 카드 4: 포켓몬스터 게임 (새로 추가됨) -->
+                    <a href="https://jongchaeyeong-gif.github.io/myhomepagee/포켓몬스터.html" target="_blank" 
+                        class="project-card bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-[1.03] cursor-pointer block">
+                        <div class="text-5xl mb-4">🕹️</div>
+                        <h3 class="text-2xl font-bold text-amber-800 mb-2">포켓몬스터 웹 게임</h3>
+                        <p class="text-gray-600 mb-4">직접 만든 포켓몬스터 스타일의 인터랙티브 웹 게임입니다. 이 링크로 바로 이동합니다! 🚀</p>
+                        <span class="inline-block bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full">HTML / JavaScript</span>
+                        <!-- 외부 링크이므로 버튼을 <a> 태그로 대체하고 스타일 적용 -->
+                        <div class="mt-4">
+                            <button class="bg-orange-500 text-white font-semibold py-2 px-4 rounded-xl hover:bg-orange-600 transition duration-300 w-full">게임 플레이 🎮</button>
+                        </div>
+                    </a>
 
                 </div>
                 
@@ -287,6 +299,7 @@
                     <p class="mt-2 text-sm text-gray-500">배운 점: 사용자 인증 및 실시간 데이터베이스(NoSQL) 활용 능력을 길렀습니다.</p>
                 `
             }
+            // 프로젝트 4는 외부 링크로 직접 연결되므로 모달 데이터가 필요 없습니다.
         };
 
         document.querySelectorAll('.details-btn').forEach(button => {
