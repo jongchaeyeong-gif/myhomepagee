@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포켓몬스터 스타팅 포켓몬 추천</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Tailwind CSS 설정 */
+        .container {
+            max-width: 640px;
+        }
+        
+        .shadow-pokemon {
+            box-shadow: 0 10px 15px -3px rgba(59, 76, 202, 0.5), 0 4px 6px -2px rgba(59, 76, 202, 0.05);
+        }
+
+        .btn-option {
+            transition: all 0.2s ease-in-out;
+            border: 2px solid #3b4cca;
+            text-align: left; /* 텍스트 왼쪽 정렬 */
+        }
+
+        .btn-option:hover {
+            transform: scale(1.02); /* 살짝 튀어나오는 효과 */
+            background-color: #3b4cca; /* Pokémon Blue */
+            color: #ffde00; /* Pokémon Yellow */
+        }
+
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+
+        /* 반응형 디자인을 위한 커스텀 스타일 */
+        @media (min-width: 640px) {
+            .options-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 font-sans">
+
+    <div class="container mx-auto bg-white rounded-xl p-6 md:p-10 shadow-pokemon border-4 border-[#3b4cca]">
+        
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-[#cc0000] mb-6 border-b-2 pb-2 border-gray-200">
+            파트너 포켓몬 찾기 테스트
+        </h1>
+        
+        <div id="quiz-start-area" class="text-center">
+            <p class="text-lg text-gray-700 mb-6">
+                몇 가지 질문에 답하여 당신의 모험 스타일을 파악하고, 가장 잘 맞는 스타팅 포켓몬을 추천받으세요!
+            </p>
+            <button class="bg-[#cc0000] hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-lg"
+                    onclick="startQuiz()">
+                테스트 시작하기!
+            </button>
+        </div>
+
+        <div id="question-area" class="hidden text-center mb-8">
+            <p id="question-text" class="text-xl text-gray-800 mb-6 font-semibold"></p>
+            
+            <div id="options-container" class="options-grid grid grid-cols-1 gap-4">
+                <!-- 옵션 버튼들이 여기에 동적으로 삽입됩니다. -->
+            </div>
+            <p id="progress-text" class="mt-4 text-sm text-gray-500"></p>
+        </div>
+
+        <div id="result-area" class="hidden mt-8 pt-4 border-t-2 border-gray-200 text-center">
+            <h2 class="text-2xl font-extrabold text-[#3b4cca] mb-4">
+                🎉 당신과 가장 잘 맞는 파트너 포켓몬은 이겁니다!
+            </h2>
+            
+            <div id="pokemon-card" class="p-6 rounded-xl border border-dashed mx-auto max-w-sm">
+                <img id="pokemon-image" src="" alt="추천 포켓몬 이미지" class="mx-auto w-40 h-40 mb-4 animate-bounce-slow">
+                <p id="pokemon-name" class="text-4xl font-black mb-2"></p>
+                <p id="pokemon-type" class="text-xl font-medium text-gray-600 mb-4"></p>
+                <p id="pokemon-description" class="text-md text-gray-700 leading-relaxed"></p>
+            </div>
+
+            <button class="mt-8 bg-[#cc0000] hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full shadow-lg"
+                    onclick="resetApp()">
+                다시 테스트하기
+            </button>
+        </div>
+        
+    </div>
+
+    <script>
+        // 포켓몬 데이터 정의
+        const pokemonData = {
+            'bulbasaur': { 
+                name: '이상해씨 (Bulbasaur)', 
+                type: '풀 / 독 타입',
+                description: '당신은 계획적이고 전략적인 타입입니다. 이상해씨는 다양한 기술과 상태 이상으로 안정적인 운영을 선호하는 당신의 플레이 스타일과 완벽하게 조화를 이룹니다.', 
+                image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+                color: 'bg-green-50 border-green-500 text-green-700'
+            },
+            'charmander': { 
+                name: '파이리 (Charmander)', 
+                type: '불꽃 타입',
+                description: '당신은 도전적이고 적극적인 타입입니다. 파이리는 강력한 공격력과 빠른 기동성으로 짜릿한 모험과 화끈한 승리를 즐기는 당신의 마음을 사로잡을 것입니다.', 
+                image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png',
+                color: 'bg-red-50 border-red-500 text-red-700'
+            },
+            'squirtle': { 
+                name: '꼬부기 (Squirtle)', 
+                type: '물 타입',
+                description: '당신은 신중하고 안정성을 중시하는 타입입니다. 꼬부기는 단단한 방어와 끈기로 어떤 난관에도 흔들림 없이 팀을 지켜내는 든든한 파트너가 되어줄 것입니다.', 
+                image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png',
+                color: 'bg-blue-50 border-blue-500 text-blue-700'
+            }
+        };
+
+        // 퀴즈 질문 정의 (각 선택지에 포켓몬 이름으로 점수를 할당)
+        const quizQuestions = [
+            {
+                id: 1,
+                question: "Q1. 새로운 도전을 마주할 때 당신의 주된 태도는?",
+                options: [
+                    { text: "A. 철저히 분석하고 계획을 세운 후 신중하게 접근한다.", score: 'bulbasaur' },
+                    { text: "B. 일단 부딪혀보고 빠르게 경험하며 해결책을 찾아낸다.", score: 'charmander' },
+                    { text: "C. 주변 상황을 관찰하고 안전을 확보하며 천천히 나아간다.", score: 'squirtle' }
+                ]
+            },
+            {
+                id: 2,
+                question: "Q2. 팀워크 상황에서 당신의 역할은 무엇이라고 생각하나요?",
+                options: [
+                    { text: "A. 팀의 균형을 맞추고 다양한 역할을 조율하는 전략가.", score: 'bulbasaur' },
+                    { text: "B. 목표를 향해 돌격하는 최전선의 공격수 또는 리더.", score: 'charmander' },
+                    { text: "C. 팀의 기반이 되어 모두를 보호하고 든든하게 받쳐주는 방어자.", score: 'squirtle' }
+                ]
+            },
+            {
+                id: 3,
+                question: "Q3. 당신이 스트레스를 해소하는 가장 좋은 방법은?",
+                options: [
+                    { text: "A. 정적인 취미나 독서를 통해 마음의 평화를 찾는다.", score: 'bulbasaur' },
+                    { text: "B. 격렬한 운동이나 활동으로 에너지를 발산한다.", score: 'charmander' },
+                    { text: "C. 조용하고 편안한 물가에서 휴식을 취하며 재충전한다.", score: 'squirtle' }
+                ]
+            },
+            {
+                id: 4,
+                question: "Q4. 만약 포켓몬 배틀 중이라면, 당신은 어떤 타입을 선호하나요?",
+                options: [
+                    { text: "A. 독, 수면 등 상태 이상을 걸어 상대를 서서히 약화시키는 플레이.", score: 'bulbasaur' },
+                    { text: "B. 높은 화력으로 약점을 찔러 상대를 한 번에 쓰러뜨리는 플레이.", score: 'charmander' },
+                    { text: "C. 튼튼한 방어로 공격을 버텨내며 역습 기회를 노리는 플레이.", score: 'squirtle' }
+                ]
+            }
+        ];
+
+        // 퀴즈 상태 관리
+        let currentQuestionIndex = 0;
+        let scores = {
+            bulbasaur: 0,
+            charmander: 0,
+            squirtle: 0
+        };
+
+        // DOM 요소
+        const quizStartArea = document.getElementById('quiz-start-area');
+        const questionArea = document.getElementById('question-area');
+        const resultArea = document.getElementById('result-area');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const progressText = document.getElementById('progress-text');
+
+        // 퀴즈 시작 함수
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            scores = { bulbasaur: 0, charmander: 0, squirtle: 0 };
+            quizStartArea.classList.add('hidden');
+            questionArea.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        // 질문 로드 함수
+        function loadQuestion() {
+            if (currentQuestionIndex >= quizQuestions.length) {
+                showResult();
+                return;
+            }
+
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            
+            // 질문 텍스트 업데이트
+            questionText.textContent = currentQuestion.question;
+            
+            // 옵션 버튼 동적 생성
+            optionsContainer.innerHTML = ''; // 기존 옵션 제거
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'btn-option bg-yellow-400 text-[#3b4cca] font-semibold py-3 px-4 rounded-lg shadow-md';
+                button.textContent = option.text;
+                // 다음 질문으로 넘어가도록 answerQuestion 함수 호출
+                button.onclick = () => answerQuestion(option.score);
+                optionsContainer.appendChild(button);
+            });
+
+            // 진행률 표시
+            progressText.textContent = `(${currentQuestionIndex + 1} / ${quizQuestions.length})`;
+            
+            // 질문 영역으로 스크롤 이동
+            questionArea.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 답변 처리 함수
+        function answerQuestion(scoreKey) {
+            scores[scoreKey] += 1;
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        // 결과 표시 함수
+        function showResult() {
+            questionArea.classList.add('hidden');
+            resultArea.classList.remove('hidden');
+
+            // 가장 높은 점수를 가진 포켓몬 찾기
+            let highestScore = -1;
+            let recommendedPokemonKey = '';
+            
+            // 점수 비교 로직
+            for (const key in scores) {
+                if (scores[key] > highestScore) {
+                    highestScore = scores[key];
+                    recommendedPokemonKey = key;
+                } else if (scores[key] === highestScore) {
+                    // 동점일 경우, 키가 'bulbasaur', 'squirtle', 'charmander' 순으로 정렬되어 있다고 가정하고
+                    // 먼저 나온 포켓몬이 추천되도록 현재 로직 유지 (실제로는 동점 처리 로직을 더 복잡하게 만들 수 있음)
+                    // 여기서는 이상해씨 > 파이리 > 꼬부기 순으로 기본 우선순위를 둡니다. (임의 설정)
+                    // 하지만 현재 퀴즈 구성상 순서와 상관없이 점수가 높은 것을 선택합니다.
+                }
+            }
+            
+            const finalPokemon = pokemonData[recommendedPokemonKey];
+
+            // 결과 영역 DOM 업데이트
+            document.getElementById('pokemon-name').textContent = finalPokemon.name;
+            document.getElementById('pokemon-type').textContent = `[ ${finalPokemon.type} ]`;
+            document.getElementById('pokemon-description').textContent = finalPokemon.description;
+            document.getElementById('pokemon-image').src = finalPokemon.image;
+            document.getElementById('pokemon-image').alt = `${finalPokemon.name} 이미지`;
+
+            // 결과 카드 스타일 업데이트
+            const pokemonCard = document.getElementById('pokemon-card');
+            // 이전 클래스 제거 및 새로운 테마 클래스 추가 (bg-*, border-*, text-*)
+            pokemonCard.className = `p-6 rounded-xl border border-dashed mx-auto max-w-sm ${finalPokemon.color}`;
+            
+            // 결과 영역으로 스크롤 이동
+            resultArea.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 앱 초기 상태로 재설정 함수
+        function resetApp() {
+            resultArea.classList.add('hidden');
+            questionArea.classList.add('hidden');
+            quizStartArea.classList.remove('hidden');
+            
+            // 시작 영역으로 스크롤 이동
+            quizStartArea.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
