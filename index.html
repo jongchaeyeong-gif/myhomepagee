@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐥 똑똑한 학생의 코딩 작품집 🚀</title>
+    <!-- Tailwind CSS CDN 로드 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Inter (기본 사용) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* 커스텀 스타일 및 애니메이션 정의 */
+        :root {
+            /* Tailwind 기반으로 포근한 병아리색 정의 */
+            --chick-yellow-light: #FFFBEB; /* yellow-50 */
+            --chick-yellow-medium: #FDE68A; /* yellow-300 */
+            --chick-yellow-dark: #D97706; /* amber-700 for text/accent */
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* 병아리 이모티콘에 적용할 바운스 애니메이션 */
+        @keyframes bounce-float {
+            0%, 100% { transform: translateY(0) rotate(1deg); }
+            50% { transform: translateY(-15px) rotate(-1deg); }
+        }
+
+        .chick-emoji {
+            font-size: 8rem; /* 데스크톱 크기 */
+            animation: bounce-float 3s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        /* 모달 배경을 위한 스타일 */
+        .modal-overlay {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        /* 반응형 이모티콘 크기 조정 */
+        @media (max-width: 640px) {
+            .chick-emoji {
+                font-size: 6rem;
+            }
+        }
+
+        /* 스크롤바 커스터마이징 (옵션) */
+        /* 이 코드를 추가하여 부드러운 스크롤바 모양을 만듭니다. */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--chick-yellow-light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--chick-yellow-medium);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="bg-yellow-50 text-amber-900 min-h-screen">
+
+    <!-- 1. 헤더 (고정 네비게이션 바) -->
+    <header class="fixed top-0 left-0 w-full bg-amber-400/90 shadow-lg backdrop-blur-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+            <a href="#home" class="text-2xl font-extrabold text-amber-900 tracking-wider">
+                MSYH Coding 💻
+            </a>
+            
+            <!-- 데스크톱 네비게이션 -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="#about" class="text-amber-900 hover:text-white transition duration-300 font-medium p-2 rounded-lg">🙋‍♀️ 소개</a>
+                <a href="#projects" class="text-amber-900 hover:text-white transition duration-300 font-medium p-2 rounded-lg">✨ 작품</a>
+                <a href="#contact" class="text-amber-900 hover:text-white transition duration-300 font-medium p-2 rounded-lg">💌 연락</a>
+            </nav>
+            
+            <!-- 모바일 메뉴 버튼 -->
+            <button id="menu-toggle" class="md:hidden p-2 rounded-full text-amber-900 hover:bg-amber-50 transition duration-300 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+
+        <!-- 모바일 메뉴 드롭다운 -->
+        <nav id="mobile-menu" class="md:hidden hidden bg-amber-300/95 py-2">
+            <a href="#about" class="block px-4 py-2 text-amber-900 hover:bg-amber-400 transition duration-300 font-medium border-b border-amber-500" onclick="closeMenu()">🙋‍♀️ 소개</a>
+            <a href="#projects" class="block px-4 py-2 text-amber-900 hover:bg-amber-400 transition duration-300 font-medium border-b border-amber-500" onclick="closeMenu()">✨ 작품</a>
+            <a href="#contact" class="block px-4 py-2 text-amber-900 hover:bg-amber-400 transition duration-300 font-medium" onclick="closeMenu()">💌 연락</a>
+        </nav>
+    </header>
+
+    <main class="pt-16">
+        <!-- 2. 홈 섹션 (Hero) -->
+        <section id="home" class="py-20 md:py-32 bg-yellow-200/50 flex items-center justify-center min-h-[60vh]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:flex md:items-center md:justify-around space-y-8 md:space-y-0">
+                
+                <div class="max-w-xl md:text-left">
+                    <h1 class="text-5xl md:text-6xl font-black mb-4 text-amber-800 leading-tight">
+                        ✨ 10723 종채영 🚀
+                    </h1>
+                    <p class="text-xl md:text-2xl mb-8 text-amber-700 font-semibold">
+                        다양한 <span class="text-orange-600">앱</span>과 <span class="text-orange-600">챗봇</span>을 만들고 있어요! 함께 코딩의 재미를 나눠요! 💡
+                    </p>
+                    <button onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });"
+                        class="bg-orange-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-orange-600 transition duration-300 transform hover:scale-105 active:scale-95">
+                        내 작품 보러가기 🤩
+                    </button>
+                </div>
+                
+                <div class="hidden md:block">
+                    <span class="chick-emoji">🐥</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 소개 섹션 (About) -->
+        <section id="about" class="py-16 bg-yellow-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-extrabold mb-12 text-amber-700">🙋‍♀️ 자기소개</h2>
+                <div class="bg-white p-8 sm:p-12 rounded-2xl shadow-xl border-4 border-amber-300 text-left space-y-4">
+                    <p class="text-lg">✅ <strong class="text-amber-600">이름:</strong> [종채영] (명신여고 1학년)</p>
+                    <p class="text-lg">✅ <strong class="text-amber-600">취미:</strong> 코딩 (HTML, CSS, JavaScript, Python 등)</p>
+                    <p class="text-lg">✅ <strong class="text-amber-600">관심 분야:</strong> AI 챗봇, 사용자 경험 개선 앱, 웹 개발 🤖</p>
+                    <p class="text-lg">✅ <strong class="text-amber-600">한 마디:</strong> 상상을 코드로 바꾸는 과정이 가장 짜릿해요! 제 포트폴리오를 방문해 주셔서 감사합니다. 같이 성장할 분들 환영해요! 🌱</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 프로젝트 섹션 (Projects) -->
+        <section id="projects" class="py-16 bg-yellow-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-extrabold mb-12 text-amber-700">💻 나의 멋진 프로젝트 갤러리</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- 프로젝트 카드 1: 앱 -->
+                    <div class="project-card bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-[1.03] cursor-pointer" data-project-id="1">
+                        <div class="text-5xl mb-4">📱</div>
+                        <h3 class="text-2xl font-bold text-amber-800 mb-2">AI 공부 플래너 앱</h3>
+                        <p class="text-gray-600 mb-4">개인의 학습 패턴을 분석해 최적의 공부 계획을 추천해 주는 모바일 앱입니다.</p>
+                        <span class="inline-block bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full">Python / Flask</span>
+                        <button class="details-btn mt-4 bg-amber-300 text-amber-900 font-semibold py-2 px-4 rounded-xl hover:bg-amber-400 transition duration-300">자세히 보기 🔎</button>
+                    </div>
+
+                    <!-- 프로젝트 카드 2: 챗봇 -->
+                    <div class="project-card bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-[1.03] cursor-pointer" data-project-id="2">
+                        <div class="text-5xl mb-4">💬</div>
+                        <h3 class="text-2xl font-bold text-amber-800 mb-2">명신여고 급식 추천 챗봇</h3>
+                        <p class="text-gray-600 mb-4">오늘의 급식 메뉴를 알려주고, 영양 정보를 분석해 맞춤형 추천을 해주는 챗봇입니다.</p>
+                        <span class="inline-block bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full">JavaScript / Node.js</span>
+                        <button class="details-btn mt-4 bg-amber-300 text-amber-900 font-semibold py-2 px-4 rounded-xl hover:bg-amber-400 transition duration-300">자세히 보기 🔎</button>
+                    </div>
+
+                    <!-- 프로젝트 카드 3: 웹사이트 -->
+                    <div class="project-card bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-[1.03] cursor-pointer" data-project-id="3">
+                        <div class="text-5xl mb-4">🌐</div>
+                        <h3 class="text-2xl font-bold text-amber-800 mb-2">미래 개발자 커뮤니티 웹</h3>
+                        <p class="text-gray-600 mb-4">청소년 개발자들이 서로 코드를 공유하고 질문하며 소통하는 커뮤니티 웹사이트입니다.</p>
+                        <span class="inline-block bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full">HTML / CSS / Firebase</span>
+                        <button class="details-btn mt-4 bg-amber-300 text-amber-900 font-semibold py-2 px-4 rounded-xl hover:bg-amber-400 transition duration-300">자세히 보기 🔎</button>
+                    </div>
+
+                </div>
+                
+                <p class="mt-12 text-xl font-medium text-amber-600">
+                    새로운 프로젝트가 곧 추가될 예정입니다. 기대해 주세요! 🚧
+                </p>
+            </div>
+        </section>
+
+        <!-- 5. 연락처 섹션 (Contact) -->
+        <section id="contact" class="py-16 bg-yellow-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-extrabold mb-8 text-amber-700">💌 연락하기</h2>
+                <div class="space-y-4">
+                    <p class="text-lg md:text-xl">저의 코딩 여정에 관심이 있다면 언제든지 연락 주세요! 협업 환영합니다! 😊</p>
+                    <p class="text-2xl font-semibold text-amber-800">
+                        📧 이메일: <a href="mailto:your_email@example.com" class="hover:underline">your_email@example.com</a>
+                    </p>
+                    <p class="text-2xl font-semibold text-amber-800">
+                        🐙 깃허브: <a href="[당신의 깃허브 주소]" target="_blank" class="text-blue-500 hover:text-blue-700 hover:underline transition duration-300">🔗 GitHub 방문하기</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 6. 푸터 (Footer) -->
+    <footer class="bg-amber-500 text-amber-900 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-lg font-medium">
+                Copyright &copy; 2024 명신여고 코딩 포트폴리오. Made with lots of ✨ and ☕.
+            </p>
+        </div>
+    </footer>
+
+    <!-- 7. 프로젝트 상세 모달 (Modal - 인터랙티브 요소) -->
+    <div id="project-modal" class="fixed inset-0 hidden items-center justify-center z-[100] modal-overlay p-4" onclick="closeModal()">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full transform transition-all duration-300 scale-95" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-start mb-4">
+                <h3 id="modal-title" class="text-3xl font-bold text-amber-800"></h3>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-red-500 transition duration-300 text-2xl font-light leading-none">&times;</button>
+            </div>
+            <div id="modal-content" class="space-y-4 text-gray-700">
+                <!-- 여기에 프로젝트 상세 내용이 채워집니다 -->
+            </div>
+            <button onclick="closeModal()" class="mt-6 bg-amber-500 text-white font-semibold py-2 px-6 rounded-full hover:bg-amber-600 transition duration-300">
+                닫기 🚪
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        // --- JavaScript for Interactivity and Responsiveness ---
+
+        // 1. 모바일 메뉴 토글 기능
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // 햄버거 아이콘 변경 (선택적)
+            const icon = menuToggle.querySelector('svg');
+            if (mobileMenu.classList.contains('hidden')) {
+                 icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>';
+            } else {
+                 icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+            }
+        });
+
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            const icon = menuToggle.querySelector('svg');
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>';
+        }
+
+        // 2. 프로젝트 상세 모달 기능
+        const modal = document.getElementById('project-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        
+        // 가상 프로젝트 데이터 (실제 데이터로 대체하세요!)
+        const projectDetails = {
+            1: {
+                title: "AI 공부 플래너 앱 📱",
+                content: `
+                    <p class="text-xl font-medium">프로젝트 개요: 인공지능을 활용하여 개인화된 학습 스케줄을 제공하는 앱</p>
+                    <p>📚 <strong>주요 기능:</strong></p>
+                    <ul class="list-disc list-inside ml-4 space-y-1">
+                        <li>학습 시간 및 집중도 분석</li>
+                        <li>취약 과목 기반 자동 스케줄링</li>
+                        <li>스터디 그룹 추천 기능</li>
+                    </ul>
+                    <p class="mt-2">🛠 <strong>기술 스택:</strong> Python, Scikit-learn(간단한 AI), Flask (백엔드 API), HTML/Tailwind (프론트엔드)</p>
+                    <p class="mt-2 text-sm text-gray-500">배운 점: 데이터 분석 기반의 사용자 맞춤형 서비스 설계의 중요성을 깨달았습니다.</p>
+                `
+            },
+            2: {
+                title: "명신여고 급식 추천 챗봇 💬",
+                content: `
+                    <p class="text-xl font-medium">프로젝트 개요: 카카오톡 기반으로 작동하는 학교 급식 안내 및 추천 챗봇</p>
+                    <p>🍽️ <strong>주요 기능:</strong></p>
+                    <ul class="list-disc list-inside ml-4 space-y-1">
+                        <li>실시간 급식 메뉴 조회</li>
+                        <li>칼로리 및 영양 정보 제공</li>
+                        <li>선호도 기반 메뉴 추천 알고리즘</li>
+                    </ul>
+                    <p class="mt-2">🛠 <strong>기술 스택:</strong> JavaScript, Node.js, Kakao i Open Builder API</p>
+                    <p class="mt-2 text-sm text-gray-500">배운 점: 외부 API를 연동하고 비동기 통신을 처리하는 방법을 숙달했습니다.</p>
+                `
+            },
+            3: {
+                title: "미래 개발자 커뮤니티 웹 🌐",
+                content: `
+                    <p class="text-xl font-medium">프로젝트 개요: 청소년 개발자들을 위한 코드 공유 및 질문/답변 커뮤니티</p>
+                    <p>👥 <strong>주요 기능:</strong></p>
+                    <ul class="list-disc list-inside ml-4 space-y-1">
+                        <li>Markdown 기반 게시글 작성</li>
+                        <li>댓글 및 좋아요 기능</li>
+                        <li>익명 게시판 운영</li>
+                    </ul>
+                    <p class="mt-2">🛠 <strong>기술 스택:</strong> HTML, Tailwind CSS, JavaScript, Firebase Firestore (데이터베이스)</p>
+                    <p class="mt-2 text-sm text-gray-500">배운 점: 사용자 인증 및 실시간 데이터베이스(NoSQL) 활용 능력을 길렀습니다.</p>
+                `
+            }
+        };
+
+        document.querySelectorAll('.details-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation(); // 카드 hover 효과와 충돌 방지
+                const projectId = event.target.closest('.project-card').dataset.projectId;
+                const detail = projectDetails[projectId];
+
+                if (detail) {
+                    modalTitle.textContent = detail.title;
+                    modalContent.innerHTML = detail.content;
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    document.body.classList.add('overflow-hidden'); // 배경 스크롤 방지
+                }
+            });
+        });
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.classList.remove('overflow-hidden');
+        }
+        
+        // Esc 키로 모달 닫기
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
